@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2020", // Specify ECMAScript target version
+    "module": "ESNext", // Specify module code generation
+    "outDir": "dist", // Directory for compiled files
+    "rootDir": "src", // Root directory of your source files
+    "strict": true, // Enables strict type-checking options
+    "esModuleInterop": true, // Enables compatibility with non-ES module libraries
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
+    "moduleResolution": "node", // Module resolution strategy
+    "resolveJsonModule": true, // Allow importing .json files
+    "noImplicitReturns": true, // No implicit returns in functions
+    "noUnusedLocals": true, // Report errors on unused locals
+    "noUnusedParameters": true, // Report errors on unused parameters
+    "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+    "removeComments": false // Set to true if you want to remove comments in the output
+  },
+  "include": ["src/**/*"], // Include all files in the src folder
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and dist folders
+}
