@@ -5,7 +5,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import formsRouter from './routes/forms';
+import formsRouter from './routes/forms.js';
+import usersRouter from './routes/users.js';
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Routes
+app.use('/api/users', usersRouter);
 app.use('/api/forms', formsRouter);
 
 // Not Found Handler
