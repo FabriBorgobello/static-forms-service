@@ -2,8 +2,6 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import dotenv from 'dotenv';
-dotenv.config();
 
 import formsRouter from './routes/forms.js';
 import usersRouter from './routes/users.js';
