@@ -9,9 +9,9 @@ const baseConfig: Knex.Config = {
     password: process.env.PGPASSWORD,
     host: process.env.PGHOST,
     port: Number(process.env.PGPORT),
-    ssl: {
-      rejectUnauthorized: process.env.PGSSLMODE === 'require',
-    },
+    // ssl: {
+    //   rejectUnauthorized: process.env.PGSSLMODE === 'require',
+    // },
   },
   migrations: {
     tableName: 'knex_migrations',
