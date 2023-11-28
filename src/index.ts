@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 import usersRouter from '@/routes/users.route';
+import authRouter from '@/routes/auth.route';
 import { errorHandler } from './utils/error-handler';
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
 
 // Health Check
 app.get('/health', (_, res) => {
