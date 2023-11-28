@@ -18,7 +18,4 @@ router.put('/:id', formController.updateForm);
 // DELETE a form
 router.delete('/:id', formController.deleteForm);
 
-// Submit a form
-router.post('/:id/submit', formController.submitForm);
-
 export default router;
