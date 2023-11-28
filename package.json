@@ -2,7 +2,7 @@
   "name": "static-forms-service",
   "version": "1.0.0",
   "description": "Service in charge of handling forms sent from static sites.",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "node esbuild.config.js",

@@ -1,12 +1,12 @@
-import { build } from 'esbuild';
-import alias from 'esbuild-plugin-alias';
+const { build } = require('esbuild');
+const alias = require('esbuild-plugin-alias');
 
 build({
   entryPoints: ['src/index.ts'],
   bundle: true,
   outdir: 'dist',
   platform: 'node',
-  format: 'esm',
+  format: 'cjs',
   target: 'es2020',
   minify: false,
   sourcemap: true,

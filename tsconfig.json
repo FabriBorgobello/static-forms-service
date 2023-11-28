@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020", // Specify ECMAScript target version
-    "module": "ESNext", // Specify module code generation
+    "module": "CommonJS", // Specify module code generation
     "outDir": "dist", // Directory for compiled files
     "rootDir": "src", // Root directory of your source file
     "baseUrl": "./", // Base directory to resolve non-absolute module names
