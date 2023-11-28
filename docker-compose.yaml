@@ -12,16 +12,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMINEMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMINPASSWORD}
-    ports:
-      - '${PGADMINPORT}:80'
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-
 volumes:
   postgres_data:
-  pgadmin_data:
