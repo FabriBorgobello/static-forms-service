@@ -24,6 +24,10 @@ Follow these steps to set up and run the service locally:
 
 4. Run development server: `npm run dev`
 
+## Environment Variables
+
+Check out the `.env.example` file for a list of required environment variables. These can be set in a `.env` file in the root directory of the project.
+
 ## 🚀 Deployment
 
 For deployment, ensure you've completed the build process with `npm run build` and then use `npm run start` to launch the server in production mode.
