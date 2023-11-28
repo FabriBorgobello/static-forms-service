@@ -10,7 +10,7 @@ build({
   target: 'es2020',
   minify: false,
   sourcemap: true,
-  external: [],
+  external: ['sqlite3', 'mysql', 'tedious', 'oracledb', 'better-sqlite3', 'mysql2', 'pg-query-stream'],
   loader: {
     '.json': 'json',
   },
