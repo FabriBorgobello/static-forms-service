@@ -1,14 +1,9 @@
-import { Pool } from 'pg';
+import pg from 'pg';
 
-export const pool = new Pool({
+export const pool = new pg.Pool({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: Number(process.env.PGPORT),
-});
-
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res);
-  pool.end();
 });

@@ -1,5 +1,5 @@
+import { pool } from '@/database';
 import { Request, Response } from 'express';
-import { pool } from '../database/index.js';
 
 // List
 export const getForms = (_req: Request, res: Response) => {

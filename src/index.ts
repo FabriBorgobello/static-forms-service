@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import formsRouter from './routes/forms.route.js';
-import usersRouter from './routes/users.route.js';
+import formsRouter from '@/routes/forms.route';
+import usersRouter from '@/routes/users.route';
 
 const app = express();
 const port = process.env.PORT ?? 3000;

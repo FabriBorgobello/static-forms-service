@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { type User } from '../models/users.model.js';
+import { type User } from '@/models/users.model';
 
 let users: User[] = [
   {
