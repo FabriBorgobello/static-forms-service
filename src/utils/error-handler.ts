@@ -40,6 +40,7 @@ function handleDatabaseError(err: pg.DatabaseError, res: Response) {
     case '23505':
       res.status(409).json({ error: err.detail });
       break;
+    // TODO: Add other error codes
     default:
       res.status(500).json({ error: 'Database error' });
   }
