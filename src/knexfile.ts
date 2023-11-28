@@ -12,10 +12,10 @@ const config: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './database/migrations/',
+      directory: process.env.NODE_ENV === 'production' ? './dist/database/migrations' : './src/database/migrations',
     },
     seeds: {
-      directory: './database/seeds/',
+      directory: process.env.NODE_ENV === 'production' ? './dist/database/seeds' : './src/database/seeds',
     },
   },
   // other environments (staging, production, etc.)

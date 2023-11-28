@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-export async function up(knex: Knex): Promise<void> {
+export async function up(knex: Knex) {
   await knex.raw(`
     CREATE OR REPLACE FUNCTION update_updated_at_column()
     RETURNS TRIGGER AS $$
@@ -12,11 +12,11 @@ export async function up(knex: Knex): Promise<void> {
   `);
 
   const tables = await knex
-    .select('tablename')
-    .from('pg_tables')
-    .where('schemaname', 'public')
-    .andWhereRaw("has_column(tablename, 'updated_at')")
-    .then((rows) => rows.map((row) => row.tablename));
+    .select('table_name')
+    .from('information_schema.columns')
+    .where('column_name', 'updated_at')
+    .andWhere('table_schema', 'public')
+    .then((rows) => rows.map((row) => row.table_name));
 
   for (const table of tables) {
     await knex.raw(`
@@ -29,13 +29,13 @@ export async function up(knex: Knex): Promise<void> {
   }
 }
 
-export async function down(knex: Knex): Promise<void> {
+export async function down(knex: Knex) {
   const tables = await knex
-    .select('tablename')
-    .from('pg_tables')
-    .where('schemaname', 'public')
-    .andWhereRaw("has_column(tablename, 'updated_at')")
-    .then((rows) => rows.map((row) => row.tablename));
+    .select('table_name')
+    .from('information_schema.columns')
+    .where('column_name', 'updated_at')
+    .andWhere('table_schema', 'public')
+    .then((rows) => rows.map((row) => row.table_name));
 
   for (const table of tables) {
     await knex.raw(`
