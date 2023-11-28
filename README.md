@@ -1,47 +1,29 @@
-<p align="center">
-  <a href="https://fl0.com/" target="blank">
-    <img src="https://user-images.githubusercontent.com/88681427/217122968-e6132cad-1944-4ebe-9ec1-105af6a18c4f.png">
-  </a>
-</p>
+# Static Form Service
 
-<h2 align="center">Node.js Quickstart</h2>
-<p align="center">Backend engineering, supercharged.</p>
+## 📃 Introduction
 
-## Overview
+This backend service handles forms submitted from static pages, developed in TypeScript and built with ESBuild, leveraging Node.js and Express for robust server-side operations.
 
-Use this repository to get up and running on FL0 with the following stack:
+## 🛠️ Technologies
 
-<table>
-<tr>
-  <th>Language</th>
-  <td>Javascript</td>
-</tr>
-<tr>
-  <th>Router</th>
-  <td>Express</td>
-</tr>
-</table>
+- Language and Frameworks: [Node.js](https://nodejs.org/en/), [Express](https://expressjs.com/) and [TypeScript](https://www.typescriptlang.org/).
+- Build Tool: [ESBuild](https://esbuild.github.io/)
+- Query Builder: [Knex.js](https://knexjs.org/)
+- Database: [PostgreSQL](https://www.postgresql.org/)
+- Deployment: [fl0](https://www.fl0.com/)
 
-## Getting Started
+## 🐳 Running Locally
 
-Clone this repo and run the following commands from the project root:
+Follow these steps to set up and run the service locally:
 
-1. `npm install`
-2. `npm start`
-3. Visit http://localhost:3000 to see your app running
+1. Start Local Database: `docker-compose up -d` (Launches the PostgreSQL database using Docker).
 
-## Deploying to FL0
+2. Run Migrations: `npm run migrate:latest`
 
-Checkout our [Getting Started Guide](https://docs.fl0.com) in the FL0 documentation!
+3. Seed Database (populate with sample data): `npm run seed`
 
-## Questions
+4. Run development server: `npm run dev`
 
-If you have any questions about FL0 or this template codebase please head on over to our [Discord channel](https://discord.gg/AmmVTt9Jrw).
+## 🚀 Deployment
 
-## Issues
-
-Any issues or feature requests can be raised on the [Issues page](https://github.com/fl0zone/template-nodejs/issues) of this repo.
-
-## License
-
-This template repository is [MIT licensed](LICENSE).
+For deployment, ensure you've completed the build process with `npm run build` and then use `npm run start` to launch the server in production mode.

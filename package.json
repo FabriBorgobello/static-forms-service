@@ -12,7 +12,7 @@
     "seed:make": "knex seed:make -x ts",
     "seed": "tsx --env-file=.env node_modules/.bin/knex seed:run --knexfile ./src/knexfile.ts"
   },
-  "author": "",
+  "author": "Fabricio Borgobello",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
