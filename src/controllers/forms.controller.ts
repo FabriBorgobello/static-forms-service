@@ -66,3 +66,15 @@ export const deleteForm = (req: Request, res: Response) => {
     res.status(404).json({ message: 'Form not found' });
   }
 };
+
+// Submit
+export const submitForm = (req: Request, res: Response) => {
+  const formId = Number(req.params.id);
+  const formIndex = forms.findIndex((form) => form.id === formId);
+  if (formIndex > -1) {
+    forms[formIndex] = { ...forms[formIndex], ...req.body };
+    res.status(200).json({ message: 'Form submitted', form: forms[formIndex] });
+  } else {
+    res.status(404).json({ message: 'Form not found' });
+  }
+};
