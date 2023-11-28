@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import formsRouter from '@/routes/forms.route';
 import usersRouter from '@/routes/users.route';
 
 const app = express();
@@ -19,7 +18,6 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/api/users', usersRouter);
-app.use('/api/forms', formsRouter);
 
 // Not Found Handler
 app.use((req, res, next) => {
