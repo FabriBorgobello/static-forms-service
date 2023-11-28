@@ -10,7 +10,7 @@ build({
   target: 'es2020',
   minify: false,
   sourcemap: true,
-  external: ['express', 'cors', 'dotenv', 'helmet', 'morgan', 'pg'],
+  external: ['express', 'cors', 'dotenv', 'helmet', 'morgan', 'pg', 'bcrypt'],
   loader: {
     '.json': 'json',
   },
