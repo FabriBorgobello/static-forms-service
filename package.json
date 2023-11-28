@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "node esbuild.config.js",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "node dist/index.js",
     "migrate:make": "knex migrate:make -x ts --migrations-directory src/database/migrations",
     "migrate:latest": "tsx --env-file=.env node_modules/.bin/knex migrate:latest --knexfile ./src/knexfile.ts",
     "seed:make": "knex seed:make -x ts",
@@ -22,7 +22,6 @@
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "pg": "^8.11.3",
-    "tiny-glob": "^0.2.9",
     "typescript": "^5.3.2"
   },
   "devDependencies": {

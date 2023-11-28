@@ -1,24 +1,34 @@
 import { Knex } from 'knex';
+import { Environment } from './types';
 
-const config: { [key: string]: Knex.Config } = {
-  development: {
-    client: 'pg',
-    connection: {
-      user: process.env.PGUSER,
-      database: process.env.PGDATABASE,
-      password: process.env.PGPASSWORD,
-      host: process.env.PGHOST,
-      port: Number(process.env.PGPORT),
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-      directory: process.env.NODE_ENV === 'production' ? './dist/database/migrations' : './src/database/migrations',
-    },
-    seeds: {
-      directory: process.env.NODE_ENV === 'production' ? './dist/database/seeds' : './src/database/seeds',
-    },
+const baseConfig: Knex.Config = {
+  client: 'pg',
+  connection: {
+    user: process.env.PGUSER,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    host: process.env.PGHOST,
+    port: Number(process.env.PGPORT),
   },
-  // other environments (staging, production, etc.)
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: './src/database/migrations',
+  },
+  seeds: {
+    directory: './src/database/seeds',
+  },
+};
+
+const config: {
+  [key in Environment]: Knex.Config;
+} = {
+  development: {
+    ...baseConfig,
+  },
+  production: {
+    // TODO: Add production config
+    ...baseConfig,
+  },
 };
 
 export default config;

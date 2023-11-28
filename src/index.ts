@@ -6,7 +6,6 @@ import cors from 'cors';
 
 import usersRouter from '@/routes/users.route';
 import { errorHandler } from './utils/error-handler';
-import { migrate, seed } from './database/runners';
 
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -36,15 +35,3 @@ app.get('*', (_, res) => {
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
-
-(async () => {
-  // Run migrations
-  if (process.env.RUN_MIGRATIONS === 'true') {
-    await migrate();
-  }
-
-  // Run seeds
-  if (process.env.RUN_SEEDS === 'true') {
-    await seed();
-  }
-})();
