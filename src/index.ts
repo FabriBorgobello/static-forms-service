@@ -3,8 +3,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import formsRouter from './routes/forms.js';
-import usersRouter from './routes/users.js';
+import formsRouter from './routes/forms.route.js';
+import usersRouter from './routes/users.route.js';
 
 const app = express();
 const port = process.env.PORT ?? 3000;
