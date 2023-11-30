@@ -1,3 +1,5 @@
+import { db } from '@/database';
+import { USER_PUBLIC_FIELDS } from '@/users/users.controller';
 import passport from 'passport';
 import passportGoogle from 'passport-google-oauth20';
 
@@ -14,9 +16,26 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: '/api/auth/google/callback',
     },
-    (_accessToken, _refreshToken, profile, done) => {
-      console.log('This is the profile', profile);
-      done(null, profile);
+    async (_accessToken, _refreshToken, profile, done) => {
+      // Check if user exists
+      const email = profile.emails?.[0]?.value || '';
+      const user = await db('users').where({ email }).first();
+      // If the user doesn't exist, create the user.
+      if (!user) {
+        console.log('Creating new user');
+        const [newUser] = await db('users')
+          .insert({ name: profile.displayName, email, google_id: profile.id })
+          .returning(USER_PUBLIC_FIELDS);
+        return done(null, newUser);
+      }
+
+      // If the user exists, update the user with the latest google id and name.
+      console.log('Updating user');
+      const [updatedUser] = await db('users')
+        .where({ email })
+        .update({ name: profile.displayName, google_id: profile.id })
+        .returning(USER_PUBLIC_FIELDS);
+      return done(null, updatedUser);
     },
   ),
 );

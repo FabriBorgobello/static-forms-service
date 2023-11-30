@@ -3,12 +3,12 @@ import { generateHash } from '@/utils/crypto';
 import { NotFoundError } from '@/utils/error-handler';
 import { NextFunction, Request, Response } from 'express';
 
-const publicFields = ['id', 'name', 'email', 'created_at', 'updated_at'];
+export const USER_PUBLIC_FIELDS = ['id', 'name', 'email', 'created_at', 'updated_at'];
 
 // List
 export const getUsers = async (_req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await db('users').select(publicFields);
+    const users = await db('users').select(USER_PUBLIC_FIELDS);
     res.json(users);
   } catch (error) {
     next(error);
@@ -19,7 +19,7 @@ export const getUsers = async (_req: Request, res: Response, next: NextFunction)
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const user = await db('users').where({ id }).first().select(publicFields);
+    const user = await db('users').where({ id }).first().select(USER_PUBLIC_FIELDS);
     if (!user) throw new NotFoundError();
     res.json(user);
   } catch (error) {
@@ -32,7 +32,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
   try {
     const { name, email, password } = req.body;
     const { hash, salt } = generateHash(password);
-    const [user] = await db('users').insert({ name, email, hash, salt }).returning(publicFields);
+    const [user] = await db('users').insert({ name, email, hash, salt }).returning(USER_PUBLIC_FIELDS);
     res.status(201).json(user);
   } catch (error) {
     next(error);
@@ -44,7 +44,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
   try {
     const { id } = req.params;
     const { name, email } = req.body;
-    const [user] = await db('users').where({ id }).update({ name, email }).returning(publicFields);
+    const [user] = await db('users').where({ id }).update({ name, email }).returning(USER_PUBLIC_FIELDS);
     if (!user) throw new NotFoundError();
     res.json(user);
   } catch (error) {

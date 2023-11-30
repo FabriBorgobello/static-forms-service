@@ -5,8 +5,9 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id').primary();
     table.string('name');
     table.string('email').unique().notNullable();
-    table.string('hash', 1024).notNullable();
-    table.string('salt', 512).notNullable();
+    table.string('hash', 1024);
+    table.string('salt', 512);
+    table.string('google_id');
     table.timestamps(true, true);
   });
 }

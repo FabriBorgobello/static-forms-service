@@ -8,6 +8,15 @@
   <body>
     <h1>Static Forms Service</h1>
     <p>This is a service that allows you to create static forms that can be embedded in any website.</p>
+
+    <form action="/api/auth/login" method="POST">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" />
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" />
+      <input type="submit" value="Submit" />
+    </form>
+
     <a href="/api/auth/google">Login with Google</a>
   </body>
 </html>
