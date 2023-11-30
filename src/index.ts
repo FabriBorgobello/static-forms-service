@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import usersRouter from '@/routes/users.route';
-import authRouter from '@/routes/auth.route';
+import usersRouter from '@/users/users.route';
+import authRouter from '@/auth/auth.route';
 import { errorHandler } from './utils/error-handler';
 
 const app = express();
