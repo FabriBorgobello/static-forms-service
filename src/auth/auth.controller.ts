@@ -1,5 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
+import passport from 'passport';
 
-export const signIn = async (req: Request, res: Response, next: NextFunction) => {};
-export const signUp = async (req: Request, res: Response, next: NextFunction) => {};
-export const signOut = async (req: Request, res: Response, next: NextFunction) => {};
+export function googleSignIn(req: Request, res: Response, next: NextFunction) {
+  return passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  })(req, res, next);
+}
+export function googleSignInCallback(req: Request, res: Response, next: NextFunction) {
+  return passport.authenticate('google', {
+    failureRedirect: '/login',
+    successRedirect: '/success',
+    session: false,
+  })(req, res, next);
+}
