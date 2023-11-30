@@ -1,5 +1,5 @@
 import { db } from '@/database';
-import { generateHash } from '@/utils/crypto';
+import { encryptPassword } from '@/utils/crypto';
 import { NotFoundError } from '@/utils/error-handler';
 import { NextFunction, Request, Response } from 'express';
 
@@ -31,7 +31,7 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password } = req.body;
-    const { hash, salt } = generateHash(password);
+    const { hash, salt } = encryptPassword(password);
     const [user] = await db('users').insert({ name, email, hash, salt }).returning(USER_PUBLIC_FIELDS);
     res.status(201).json(user);
   } catch (error) {

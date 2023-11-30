@@ -10,10 +10,10 @@
     <p>This is a service that allows you to create static forms that can be embedded in any website.</p>
 
     <form action="/api/auth/login" method="POST">
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" />
       <label for="email">Email</label>
-      <input type="email" name="email" id="email" />
+      <input type="email" name="email" id="email" required />
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required />
       <input type="submit" value="Submit" />
     </form>
 

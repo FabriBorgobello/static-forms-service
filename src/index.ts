@@ -31,9 +31,9 @@ app.get('/health', (_, res) => {
 // Error Handler
 app.use(errorHandler);
 
-app.get('*', (_, res) => {
-  res.redirect('/');
-});
+// app.get('*', (_, res) => {
+//   res.redirect('/');
+// });
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
