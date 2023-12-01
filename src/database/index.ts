@@ -1,27 +1,20 @@
-import knex, { Knex } from 'knex';
+import { Pool } from 'pg';
+import { Kysely, PostgresDialect } from 'kysely';
 import { env } from '@/config';
+import { DB } from 'kysely-codegen';
 
-export const databaseConfig = {
-  user: env.PGUSER,
-  database: env.PGDATABASE,
-  password: env.PGPASSWORD,
-  host: env.PGHOST,
-  port: env.PGPORT,
-};
+const dialect = new PostgresDialect({
+  pool: new Pool({
+    user: env.PGUSER,
+    database: env.PGDATABASE,
+    password: env.PGPASSWORD,
+    host: env.PGHOST,
+    port: env.PGPORT,
+  }),
+});
 
-const knexConfig: Knex.Config = {
-  client: 'pg',
-  connection: databaseConfig,
-  // NOTE: Both migrations and seeds paths are relative to this file.
-  migrations: {
-    tableName: 'knex_migrations',
-    directory: './migrations',
-  },
-  seeds: {
-    directory: './seeds',
-  },
-};
-
-export const db = knex(knexConfig);
-
-export default knexConfig;
+// Database interface is passed to Kysely's constructor, and from now on, Kysely
+// knows your database structure.
+// Dialect is passed to Kysely's constructor, and from now on, Kysely knows how
+// to communicate with your database.
+export const db = new Kysely<DB>({ dialect });

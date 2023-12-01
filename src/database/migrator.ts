@@ -1,8 +1,7 @@
 import * as path from 'path';
-import { Pool } from 'pg';
 import { promises as fs } from 'fs';
-import { Kysely, Migrator, PostgresDialect, FileMigrationProvider } from 'kysely';
-import { databaseConfig } from '@/database';
+import { Migrator, FileMigrationProvider } from 'kysely';
+import { db } from '@/database';
 
 /**
  * This script is used to run migrations from the command line.
@@ -11,7 +10,6 @@ import { databaseConfig } from '@/database';
 
 async function migrateToLatest() {
   console.log('\x1b[33m%s\x1b[0m', '⌛ Running migrations, please wait...');
-  const db = new Kysely({ dialect: new PostgresDialect({ pool: new Pool(databaseConfig) }) });
 
   const provider = new FileMigrationProvider({
     fs,
