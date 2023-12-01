@@ -1,17 +1,19 @@
-import { Knex } from 'knex';
+import { Kysely, sql } from 'kysely';
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable('users', (table) => {
-    table.increments('id').primary();
-    table.string('name');
-    table.string('email').unique().notNullable();
-    table.string('hash', 1024);
-    table.string('salt', 512);
-    table.string('google_id');
-    table.timestamps(true, true);
-  });
+export async function up(db: Kysely<any>): Promise<void> {
+  await db.schema
+    .createTable('users')
+    .addColumn('id', 'serial', (col) => col.primaryKey())
+    .addColumn('name', 'varchar', (col) => col.notNull())
+    .addColumn('email', 'varchar', (col) => col.notNull().unique())
+    .addColumn('hash', 'varchar(1024)')
+    .addColumn('salt', 'varchar(512)')
+    .addColumn('google_id', 'varchar')
+    .addColumn('created_at', 'timestamp', (col) => col.defaultTo(sql`now()`).notNull())
+    .addColumn('updated_at', 'timestamp', (col) => col.defaultTo(sql`now()`).notNull())
+    .execute();
 }
 
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTableIfExists('users');
+export async function down(db: Kysely<any>): Promise<void> {
+  await db.schema.dropTable('users').execute();
 }

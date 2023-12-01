@@ -4,6 +4,7 @@ import { fromZodError } from 'zod-validation-error';
 // Define a schema for your environment variables
 const envSchema = z.object({
   PORT: z.coerce.number(),
+  DATABASE_URL: z.string(),
   PGUSER: z.string(),
   PGPASSWORD: z.string(),
   PGDATABASE: z.string(),

@@ -7,8 +7,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "node esbuild.config.js",
     "start": "node dist/index.js",
-    "migrate:make": "knex migrate:make -x ts --migrations-directory src/database/migrations",
-    "migrate:latest": "tsx --env-file=.env node_modules/.bin/knex migrate:latest --knexfile ./src/database/index.ts",
+    "generate-types": "kysely-codegen",
+    "migrate": "tsx --env-file=.env ./src/database/migrator.ts",
     "seed:make": "knex seed:make -x ts",
     "seed": "tsx --env-file=.env node_modules/.bin/knex seed:run --knexfile ./src/database/index.ts"
   },
@@ -19,6 +19,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
+    "kysely": "^0.26.3",
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
@@ -40,6 +41,7 @@
     "@types/pg": "^8.10.9",
     "esbuild": "^0.19.8",
     "esbuild-plugin-alias": "^0.2.1",
+    "kysely-codegen": "^0.11.0",
     "tsx": "^4.6.0"
   }
 }
