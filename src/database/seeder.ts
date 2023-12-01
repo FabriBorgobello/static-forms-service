@@ -5,9 +5,9 @@ async function seed() {
   console.log('\x1b[33m%s\x1b[0m', '⌛ Seeding, please wait...');
 
   console.log('Inserting users...');
-  await db.deleteFrom('users').execute();
+  await db.deleteFrom('user').execute();
   await db
-    .insertInto('users')
+    .insertInto('user')
     .values([
       { name: 'John Doe', email: 'johndoe@email.com', ...encryptPassword('johndoe') },
       { name: 'Jane Doe', email: 'janedoe@email.com', ...encryptPassword('janedoe') },

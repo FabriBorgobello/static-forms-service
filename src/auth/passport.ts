@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { db } from '@/database';
-import { USER_PUBLIC_FIELDS } from '@/users/users.controller';
+import { USER_PUBLIC_FIELDS } from '@/user/user.controller';
 import { validatePassword } from '@/utils/crypto';
 import { UnauthorizedError } from '@/utils/error-handler';
 import { env } from '@/config';
@@ -18,11 +18,11 @@ passport.use(
     async (_accessToken, _refreshToken, profile, done) => {
       // Check if user exists
       const email = profile.emails?.[0]?.value || '';
-      const user = await db('users').where({ email }).first();
+      const user = await db('user').where({ email }).first();
       // If the user doesn't exist, create the user.
       if (!user) {
         console.log('Creating new user');
-        const [newUser] = await db('users')
+        const [newUser] = await db('user')
           .insert({ name: profile.displayName, email, google_id: profile.id })
           .returning(USER_PUBLIC_FIELDS);
         return done(null, newUser);
@@ -30,7 +30,7 @@ passport.use(
 
       // If the user exists, update the user with the latest google id and name.
       console.log('Updating user');
-      const [updatedUser] = await db('users')
+      const [updatedUser] = await db('user')
         .where({ email })
         .update({ name: profile.displayName, google_id: profile.id })
         .returning(USER_PUBLIC_FIELDS);
@@ -49,7 +49,7 @@ passport.use(
     },
     async (username, password, done) => {
       // Check if user exists or if it's not a local user (i.e. google user)
-      const user = await db('users').where({ email: username }).first();
+      const user = await db('user').where({ email: username }).first();
       console.log('user', user);
       if (!user || !user.hash || !user.salt) {
         return done(new UnauthorizedError());

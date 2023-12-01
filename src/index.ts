@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import usersRouter from '@/users/users.route';
+import userRouter from '@/user/user.route';
 import authRouter from '@/auth/auth.route';
 import { errorHandler } from './utils/error-handler';
 import { env } from '@/config';
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Routes
-app.use('/api/users', usersRouter);
+app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 
 // Health Check
