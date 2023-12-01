@@ -10,7 +10,7 @@ export async function getUserByEmail(email: string) {
 export async function updateUserFromGoogle(email: string, profile: Profile) {
   const user = await db
     .updateTable('user')
-    .set({ name: profile.displayName, google_id: profile.id })
+    .set({ name: profile.displayName, google_id: profile.id, updated_at: new Date() })
     .where('email', '=', email)
     .returning(USER_PUBLIC_FIELDS)
     .executeTakeFirst();
