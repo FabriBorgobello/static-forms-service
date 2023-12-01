@@ -9,16 +9,21 @@ async function seed() {
   await db
     .insertInto('user')
     .values([
-      { name: 'John Doe', email: 'johndoe@email.com', ...encryptPassword('johndoe') },
-      { name: 'Jane Doe', email: 'janedoe@email.com', ...encryptPassword('janedoe') },
-      { name: 'John Smith', email: 'johnsmith@email.com', ...encryptPassword('johnsmith') },
-      { name: 'Alice Johnson', email: 'alicej@email.com', ...encryptPassword('alicejohnson') },
-      { name: 'Bob Brown', email: 'bobb@email.com', ...encryptPassword('bobbrown') },
-      { name: 'Charlie Davis', email: 'charlied@email.com', ...encryptPassword('charliedavis') },
-      { name: 'Diana Evans', email: 'dianae@email.com', ...encryptPassword('dianaevans') },
-      { name: 'Ethan Fox', email: 'ethanf@email.com', ...encryptPassword('ethanfox') },
-      { name: 'Fiona Green', email: 'fionag@email.com', ...encryptPassword('fionagreen') },
-      { name: 'George Harris', email: 'georgeh@email.com', ...encryptPassword('georgeharris') },
+      { name: 'Tony Stark', email: 'tonystark@email.com', ...encryptPassword('tonystark') },
+      { name: 'Steve Rogers', email: 'steverogers@email.com', ...encryptPassword('steverogers') },
+      { name: 'Natasha Romanoff', email: 'natasharomanoff@email.com', ...encryptPassword('natasharomanoff') },
+      { name: 'Bruce Banner', email: 'brucebanner@email.com', ...encryptPassword('brucebanner') },
+      { name: 'Thor Odinson', email: 'thorodinson@email.com', ...encryptPassword('thorodinson') },
+      { name: 'Peter Parker', email: 'peterparker@email.com', ...encryptPassword('peterparker') },
+      { name: 'Wanda Maximoff', email: 'wandamaximoff@email.com', ...encryptPassword('wandamaximoff') },
+      { name: 'Stephen Strange', email: 'stephenstrange@email.com', ...encryptPassword('stephenstrange') },
+      { name: 'Carol Danvers', email: 'caroldanvers@email.com', ...encryptPassword('caroldanvers') },
+      { name: 'Scott Lang', email: 'scottlang@email.com', ...encryptPassword('scottlang') },
+      { name: 'Matt Murdock', email: 'mattmurdock@email.com', ...encryptPassword('mattmurdock') },
+      { name: 'Loki Laufeyson', email: 'lokilaufeyson@email.com', ...encryptPassword('lokilaufeyson') },
+      { name: 'Sam Wilson', email: 'samwilson@email.com', ...encryptPassword('samwilson') },
+      { name: 'Bucky Barnes', email: 'buckybarnes@email.com', ...encryptPassword('buckybarnes') },
+      { name: 'Clint Barton', email: 'clintbarton@email.com', ...encryptPassword('clintbarton') },
     ])
     .execute();
 
