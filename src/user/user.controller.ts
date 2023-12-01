@@ -3,16 +3,30 @@ import { encryptPassword } from '@/utils/crypto';
 import { NotFoundError } from '@/utils/error-handler';
 import { NextFunction, Request, Response } from 'express';
 import { USER_PUBLIC_FIELDS } from './user.model';
+import { calculatePagination } from '@/utils/pagination';
 
 function getUsersSafely() {
   return db.selectFrom('user').select(USER_PUBLIC_FIELDS);
 }
 
 // List
-export const getUsers = async (_req: Request, res: Response, next: NextFunction) => {
+export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await getUsersSafely().execute();
-    res.json(users);
+    // Pagination parameters
+    const page = Number(req.query.page) >= 1 ? Number(req.query.page) : 1;
+    const limit = Number(req.query.limit) >= 1 ? Number(req.query.limit) : 10;
+
+    // Get total count of users for pagination metadata
+    const { count } = await db.selectFrom('user').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
+    // Retrieve users with pagination
+    const users = await getUsersSafely()
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .execute();
+
+    const pagination = calculatePagination(req, Number(count), limit, page);
+
+    res.json({ ...pagination, results: users });
   } catch (error) {
     next(error);
   }
