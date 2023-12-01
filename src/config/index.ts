@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { fromZodError } from 'zod-validation-error';
 
 // Define a schema for your environment variables
 const envSchema = z.object({
@@ -17,4 +18,7 @@ const envSchema = z.object({
 export type EnvType = z.infer<typeof envSchema>;
 
 // Validate the environment variables
-export const env = envSchema.parse(process.env);
+const result = envSchema.safeParse(process.env);
+if (!result.success) throw fromZodError(result.error);
+
+export const env = result.data;
