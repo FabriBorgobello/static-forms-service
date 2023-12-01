@@ -8,9 +8,10 @@ import cors from 'cors';
 import usersRouter from '@/users/users.route';
 import authRouter from '@/auth/auth.route';
 import { errorHandler } from './utils/error-handler';
+import { env } from '@/config';
 
 const app = express();
-const port = process.env.PORT ?? 3000;
+const port = env.PORT;
 
 app.use(morgan('dev'));
 app.use(helmet());

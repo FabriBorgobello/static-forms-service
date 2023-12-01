@@ -1,17 +1,14 @@
 import { Knex } from 'knex';
-import { Environment } from './types';
+import { env } from '@/config';
 
-const baseConfig: Knex.Config = {
+export const knexConfig: Knex.Config = {
   client: 'pg',
   connection: {
-    user: process.env.PGUSER,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    host: process.env.PGHOST,
-    port: Number(process.env.PGPORT),
-    // ssl: {
-    //   rejectUnauthorized: process.env.PGSSLMODE === 'require',
-    // },
+    user: env.PGUSER,
+    database: env.PGDATABASE,
+    password: env.PGPASSWORD,
+    host: env.PGHOST,
+    port: env.PGPORT,
   },
   migrations: {
     tableName: 'knex_migrations',
@@ -21,17 +18,3 @@ const baseConfig: Knex.Config = {
     directory: './database/seeds',
   },
 };
-
-const config: {
-  [key in Environment]: Knex.Config;
-} = {
-  development: {
-    ...baseConfig,
-  },
-  production: {
-    // TODO: Add production config
-    ...baseConfig,
-  },
-};
-
-export default config;

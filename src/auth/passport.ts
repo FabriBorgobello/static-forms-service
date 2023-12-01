@@ -5,19 +5,14 @@ import { db } from '@/database';
 import { USER_PUBLIC_FIELDS } from '@/users/users.controller';
 import { validatePassword } from '@/utils/crypto';
 import { UnauthorizedError } from '@/utils/error-handler';
-
-// TODO: Replace this with Zod
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-  throw new Error('Missing google client id or secret');
-}
+import { env } from '@/config';
 
 /** Google **/
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/api/auth/google/callback',
     },
     async (_accessToken, _refreshToken, profile, done) => {
