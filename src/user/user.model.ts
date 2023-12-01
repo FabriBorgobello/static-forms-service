@@ -1,16 +1,7 @@
-import { z } from 'zod';
 import { Insertable, Selectable, Updateable } from 'kysely';
-import { User } from '@/database/types';
-
-export const UserPublicSchema = User.omit({
-  hash: true,
-  salt: true,
-  google_id: true,
-});
+import { User as UserTable } from 'kysely-codegen';
 
 // Types
-export type User = z.infer<typeof User>;
-export type UserInsert = Insertable<User>;
-export type UserUpdate = Updateable<User>;
-export type UserSelect = Selectable<User>;
-export type UserPublic = z.infer<typeof UserPublicSchema>;
+export type User = Selectable<UserTable>;
+export type UserInsert = Insertable<UserTable>;
+export type UserUpdate = Updateable<UserTable>;
