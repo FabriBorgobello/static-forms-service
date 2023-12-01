@@ -1,4 +1,25 @@
-import knex from 'knex';
-import { knexConfig } from '@/knexfile';
+import knex, { Knex } from 'knex';
+import { env } from '@/config';
+
+const knexConfig: Knex.Config = {
+  client: 'pg',
+  connection: {
+    user: env.PGUSER,
+    database: env.PGDATABASE,
+    password: env.PGPASSWORD,
+    host: env.PGHOST,
+    port: env.PGPORT,
+  },
+  // NOTE: Both migrations and seeds paths are relative to this file.
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: './migrations',
+  },
+  seeds: {
+    directory: './seeds',
+  },
+};
 
 export const db = knex(knexConfig);
+
+export default knexConfig;

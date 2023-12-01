@@ -8,9 +8,9 @@
     "build": "node esbuild.config.js",
     "start": "node dist/index.js",
     "migrate:make": "knex migrate:make -x ts --migrations-directory src/database/migrations",
-    "migrate:latest": "tsx --env-file=.env node_modules/.bin/knex migrate:latest --knexfile ./src/knexfile.ts",
+    "migrate:latest": "tsx --env-file=.env node_modules/.bin/knex migrate:latest --knexfile ./src/database/index.ts",
     "seed:make": "knex seed:make -x ts",
-    "seed": "tsx --env-file=.env node_modules/.bin/knex seed:run --knexfile ./src/knexfile.ts"
+    "seed": "tsx --env-file=.env node_modules/.bin/knex seed:run --knexfile ./src/database/index.ts"
   },
   "author": "Fabricio Borgobello",
   "license": "ISC",
