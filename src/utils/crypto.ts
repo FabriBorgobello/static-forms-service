@@ -14,7 +14,7 @@ export function encryptPassword(password: string) {
   return { salt, hash };
 }
 
-export function validatePassword(inputPassword: string, storedHash: string, storedSalt: string) {
+export function isPasswordCorrect(inputPassword: string, storedHash: string, storedSalt: string) {
   const hash = generateHash(inputPassword, storedSalt);
   return hash === storedHash;
 }

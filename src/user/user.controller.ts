@@ -44,28 +44,6 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-// Create
-export const createUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { name, email, password } = req.body;
-    const { hash, salt } = encryptPassword(password);
-    const user = await db
-      .insertInto('user')
-      .values({
-        name,
-        email,
-        hash,
-        salt,
-      })
-      .returning(USER_PUBLIC_FIELDS)
-      .executeTakeFirst();
-
-    res.status(201).json(user);
-  } catch (error) {
-    next(error);
-  }
-};
-
 // Update
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
