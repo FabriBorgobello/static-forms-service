@@ -9,7 +9,7 @@ async function seed() {
   await db
     .insertInto('user')
     .values([
-      { name: 'Tony Stark', email: 'tonystark@email.com', ...encryptPassword('tonystark') },
+      { name: 'Tony Stark', email: 'tonystark@email.com', ...encryptPassword('tonystark'), role: 'admin' },
       { name: 'Steve Rogers', email: 'steverogers@email.com', ...encryptPassword('steverogers') },
       { name: 'Natasha Romanoff', email: 'natasharomanoff@email.com', ...encryptPassword('natasharomanoff') },
       { name: 'Bruce Banner', email: 'brucebanner@email.com', ...encryptPassword('brucebanner') },

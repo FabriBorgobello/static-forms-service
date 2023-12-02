@@ -5,7 +5,7 @@ function generateSalt() {
 }
 
 function generateHash(password: string, salt: string) {
-  return crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+  return crypto.pbkdf2Sync(password, salt, 10000, 256, 'sha256').toString('hex');
 }
 
 export function encryptPassword(password: string) {

@@ -12,6 +12,7 @@ import submissionRouter from '@/submission/submission.route';
 
 import { errorHandler } from './utils/error-handler';
 import { env } from '@/config';
+import { admin, authenticated } from './auth/middlewares';
 
 const app = express();
 const port = env.PORT;
@@ -28,6 +29,18 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/form', formRouter);
 app.use('/api/form/:id/submission', submissionRouter);
+
+app.get('/api/unprotected', (_, res) => {
+  res.status(200).json({ message: 'Unprotected route' });
+});
+
+app.get('/api/protected', authenticated, (_, res) => {
+  res.status(200).json({ message: 'Protected route' });
+});
+
+app.get('/api/admin', admin, (_, res) => {
+  res.status(200).json({ message: 'Admin route' });
+});
 
 // Health Check
 app.get('/health', (_, res) => {
