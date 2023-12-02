@@ -3,6 +3,9 @@ import { fromZodError } from 'zod-validation-error';
 
 // Define a schema for your environment variables
 const envSchema = z.object({
+  SESSION_SECRET: z.string().uuid(),
+  JWT_SECRET: z.string().uuid(),
+  REFRESH_TOKEN_SECRET: z.string().uuid(),
   DATABASE_URL: z.string(),
   PORT: z.coerce.number(),
   PGUSER: z.string(),

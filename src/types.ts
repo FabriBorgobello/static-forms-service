@@ -1,1 +1,8 @@
-export type Environment = 'development' | 'production';
+import { z } from 'zod';
+import { ENVIRONMENTS, USER_ROLES } from './constants';
+
+export const environmentSchema = z.enum(ENVIRONMENTS);
+export type Environment = z.infer<typeof environmentSchema>;
+
+export const userRoleSchema = z.enum(USER_ROLES);
+export type UserRole = z.infer<typeof userRoleSchema>;

@@ -5,7 +5,7 @@ function generateSalt() {
 }
 
 function generateHash(password: string, salt: string) {
-  return crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+  return crypto.pbkdf2Sync(password, salt, 10000, 256, 'sha256').toString('hex');
 }
 
 export function encryptPassword(password: string) {
@@ -14,7 +14,7 @@ export function encryptPassword(password: string) {
   return { salt, hash };
 }
 
-export function validatePassword(inputPassword: string, storedHash: string, storedSalt: string) {
+export function isPasswordCorrect(inputPassword: string, storedHash: string, storedSalt: string) {
   const hash = generateHash(inputPassword, storedSalt);
   return hash === storedHash;
 }

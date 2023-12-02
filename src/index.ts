@@ -5,24 +5,42 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import userRouter from '@/user/user.route';
 import authRouter from '@/auth/auth.route';
+import userRouter from '@/user/user.route';
+import formRouter from '@/form/form.route';
+import submissionRouter from '@/submission/submission.route';
+
 import { errorHandler } from './utils/error-handler';
 import { env } from '@/config';
+import { admin, authenticated } from './auth/middlewares';
 
 const app = express();
 const port = env.PORT;
 
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(morgan('dev')); // Logging
+app.use(helmet()); // Security
+app.use(cors()); // CORS
+app.use(express.json()); // JSON body parser
+app.use(express.urlencoded({ extended: true })); // URL-encoded body parser
+app.use(express.static('public')); // Serve static files
 
 // Routes
-app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
+app.use('/api/form', formRouter);
+app.use('/api/form/:id/submission', submissionRouter);
+
+app.get('/api/unprotected', (_, res) => {
+  res.status(200).json({ message: 'Unprotected route' });
+});
+
+app.get('/api/protected', authenticated, (_, res) => {
+  res.status(200).json({ message: 'Protected route' });
+});
+
+app.get('/api/admin', admin, (_, res) => {
+  res.status(200).json({ message: 'Admin route' });
+});
 
 // Health Check
 app.get('/health', (_, res) => {
