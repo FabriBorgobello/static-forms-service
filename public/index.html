@@ -8,6 +8,15 @@
   </head>
   <body>
     <h1>Static Forms Service</h1>
-    <a href="/login.html">LogIn</a>
+
+    <form action="/api/auth/login" method="POST" class="login-form">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required />
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <a href="/api/auth/google">Login with Google</a>
   </body>
 </html>
