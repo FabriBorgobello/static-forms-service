@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { validatePassword } from '@/utils/crypto';
 import { UnauthorizedError } from '@/utils/error-handler';
 import { env } from '@/config';
-import { createUserFromGoogle, getUserByEmail, updateUserFromGoogle } from '@/user/user.utils';
+import { createUserFromGoogle, getUserByEmail, getUserById, updateUserFromGoogle } from '@/user/user.utils';
 
 /** Google **/
 passport.use(
@@ -20,13 +20,11 @@ passport.use(
       const user = await getUserByEmail(email);
       // If the user doesn't exist, create the user.
       if (!user) {
-        console.log('Creating new user');
         const newUser = await createUserFromGoogle(email, profile);
         return done(null, newUser);
       }
 
       // If the user exists, update the user with the latest google id and name.
-      console.log('Updating user');
       const updatedUser = await updateUserFromGoogle(email, profile);
       return done(null, updatedUser);
     },
@@ -39,7 +37,6 @@ passport.use(
     {
       usernameField: 'email',
       passwordField: 'password',
-      session: false,
     },
     async (username, password, done) => {
       // Check if user exists or if it's not a local user (i.e. google user)
@@ -56,3 +53,12 @@ passport.use(
     },
   ),
 );
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id: number, done) => {
+  const user = await getUserById(id);
+  done(null, user);
+});

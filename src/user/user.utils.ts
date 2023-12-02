@@ -7,6 +7,11 @@ export async function getUserByEmail(email: string) {
   return user;
 }
 
+export async function getUserById(id: number) {
+  const user = await db.selectFrom('user').selectAll().where('id', '=', id).executeTakeFirst();
+  return user;
+}
+
 export async function updateUserFromGoogle(email: string, profile: Profile) {
   const user = await db
     .updateTable('user')
@@ -20,6 +25,7 @@ export async function createUserFromGoogle(email: string, profile: Profile) {
   const user = await db
     .insertInto('user')
     .values({ name: profile.displayName, email, google_id: profile.id })
+    .returningAll()
     .executeTakeFirst();
   return user;
 }
