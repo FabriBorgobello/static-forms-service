@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 import userRouter from '@/user/user.route';
+import formRouter from '@/form/form.route';
 import authRouter from '@/auth/auth.route';
 import { errorHandler } from './utils/error-handler';
 import { env } from '@/config';
@@ -22,6 +23,7 @@ app.use(express.static('public'));
 
 // Routes
 app.use('/api/user', userRouter);
+app.use('/api/form', formRouter);
 app.use('/api/auth', authRouter);
 
 // Health Check
