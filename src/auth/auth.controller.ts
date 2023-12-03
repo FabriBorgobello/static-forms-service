@@ -1,15 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { db } from '@/database';
 import { encryptPassword, isPasswordCorrect } from '@/utils/crypto';
 import { USER_PUBLIC_FIELDS } from '@/user/user.model';
 import { UnauthorizedError } from '@/utils/error-handler';
-import { env } from '@/config';
 import passport from 'passport';
-
-interface JwtPayload {
-  email: string;
-}
+import { generateAccessToken, generateTokens, verifyRefreshToken } from './auth.utils';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -36,7 +31,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (!isPasswordCorrect(password, user.hash, user.salt)) throw new UnauthorizedError();
 
     // Generate JWT access and refresh tokens
-    const { access, refresh } = generateJWT(user);
+    const { access, refresh } = generateTokens(user);
 
     // Save refresh token to database
     await db.updateTable('user').set({ refresh_token: refresh }).where('email', '=', user.email).execute();
@@ -52,12 +47,12 @@ export const token = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const { refresh } = req.body;
     // Verify refresh token and get user
-    const jwtPayload = jwt.verify(refresh, env.REFRESH_TOKEN_SECRET) as JwtPayload;
+    const jwtPayload = verifyRefreshToken(refresh);
     const user = await db.selectFrom('user').selectAll().where('email', '=', jwtPayload.email).executeTakeFirst();
     if (!user || user.refresh_token !== refresh) throw new UnauthorizedError();
 
     // Generate JWT access token
-    const access = jwt.sign({ ...jwtPayload, exp: 60 * 60 * 24 }, env.JWT_SECRET);
+    const access = generateAccessToken(user);
     res.status(200).json({ access });
   } catch (error) {
     console.log({ error });
@@ -70,7 +65,7 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const { refresh } = req.body;
     // Verify refresh token and get user
-    const jwtPayload = jwt.verify(refresh, env.REFRESH_TOKEN_SECRET) as JwtPayload;
+    const jwtPayload = verifyRefreshToken(refresh);
     const user = await db.selectFrom('user').selectAll().where('email', '=', jwtPayload.email).executeTakeFirst();
 
     if (!user || user.refresh_token !== refresh) throw new UnauthorizedError();
@@ -97,7 +92,7 @@ export const googleCallback = async (req: Request, res: Response, next: NextFunc
       if (!user) return res.redirect('/login');
 
       // Generate JWT access token and refresh token
-      const { access, refresh } = generateJWT(user);
+      const { access, refresh } = generateTokens(user);
 
       // Save refresh token to database
       db.updateTable('user').set({ refresh_token: refresh }).where('email', '=', user.email).execute();
@@ -108,10 +103,3 @@ export const googleCallback = async (req: Request, res: Response, next: NextFunc
     next(error);
   }
 };
-
-function generateJWT(user: { email: string }) {
-  const jwtPayload = { email: user.email };
-  const access = jwt.sign(jwtPayload, env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
-  const refresh = jwt.sign(jwtPayload, env.REFRESH_TOKEN_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
-  return { access, refresh };
-}
