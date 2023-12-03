@@ -1,12 +1,15 @@
 import { env } from '@/config';
+import { User } from '@/user/user.model';
 import jwt from 'jsonwebtoken';
 
-interface JwtPayload {
+export interface JwtPayload {
+  id: number;
+  name: string;
   email: string;
 }
 
-export function generateTokens(user: { email: string }) {
-  const jwtPayload = { email: user.email };
+export function generateTokens({ id, email, name }: User) {
+  const jwtPayload: JwtPayload = { id, email, name };
   const access = generateAccessToken(jwtPayload);
   const refresh = generateRefreshToken(jwtPayload);
   return { access, refresh };

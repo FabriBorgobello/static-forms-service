@@ -6,6 +6,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { createUserFromGoogle, getUserByEmail, updateUserFromGoogle } from '@/user/user.utils';
 import { isPasswordCorrect } from '@/utils/crypto';
+import { JwtPayload } from './auth.utils';
 
 /**
  * JWT Strategy
@@ -16,8 +17,8 @@ import { isPasswordCorrect } from '@/utils/crypto';
 passport.use(
   new JWTStrategy(
     { jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), secretOrKey: env.JWT_SECRET },
-    async (jwt_payload, done) => {
-      const user = await db.selectFrom('user').selectAll().where('email', '=', jwt_payload.email).executeTakeFirst();
+    async (jwt_payload: JwtPayload, done) => {
+      const user = await db.selectFrom('user').selectAll().where('id', '=', jwt_payload.id).executeTakeFirst();
       if (user) {
         return done(null, user);
       } else {
@@ -43,7 +44,7 @@ passport.use(
     async (_accessToken, _refreshToken, profile, done) => {
       // Check if user exists
       const email = profile.emails?.[0].value;
-      if (!email) return done(null, false);
+      if (!email) return done(null, undefined);
       const user = await getUserByEmail(email);
 
       // If user does not exist, create new user
