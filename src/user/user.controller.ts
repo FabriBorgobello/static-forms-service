@@ -1,5 +1,4 @@
 import { db } from '@/database';
-import { encryptPassword } from '@/utils/crypto';
 import { NotFoundError } from '@/utils/error-handler';
 import { NextFunction, Request, Response } from 'express';
 import { USER_PUBLIC_FIELDS } from './user.model';
