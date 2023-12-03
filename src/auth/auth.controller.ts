@@ -55,7 +55,6 @@ export const token = async (req: Request, res: Response, next: NextFunction) => 
     const access = generateAccessToken(user);
     res.status(200).json({ access });
   } catch (error) {
-    console.log({ error });
     next(error);
   }
 };
