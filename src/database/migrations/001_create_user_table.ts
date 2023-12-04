@@ -1,8 +1,7 @@
 import { USER_ROLES } from '@/constants';
 import { Kysely, sql } from 'kysely';
-import { DB } from 'kysely-codegen';
 
-export async function up(db: Kysely<DB>): Promise<void> {
+export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createType('user_role')
     .asEnum([...USER_ROLES])

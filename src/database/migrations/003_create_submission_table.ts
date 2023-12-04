@@ -1,7 +1,6 @@
 import { Kysely, sql } from 'kysely';
-import { DB } from 'kysely-codegen';
 
-export async function up(db: Kysely<DB>): Promise<void> {
+export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('submission')
     .addColumn('id', 'serial', (col) => col.primaryKey())
