@@ -28,7 +28,7 @@ app.use(express.static('public')); // Serve static files
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/form', formRouter);
-app.use('/api/form/:id/submission', submissionRouter);
+app.use('/api/form/:form_id/submission', submissionRouter);
 
 app.get('/api/unprotected', (_, res) => {
   res.status(200).json({ message: 'Unprotected route' });
