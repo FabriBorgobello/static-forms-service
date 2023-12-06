@@ -54,7 +54,6 @@ export const createForm = async (req: Request, res: Response, next: NextFunction
 
     res.status(201).json(form);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };

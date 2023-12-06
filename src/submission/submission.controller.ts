@@ -25,7 +25,6 @@ export const getSubmissionsByForm = async (req: Request, res: Response, next: Ne
 
     res.status(200).json(submissions);
   } catch (error) {
-    console.log({ error });
     next(error);
   }
 };
@@ -61,7 +60,6 @@ export const getSubmissionById = async (req: Request, res: Response, next: NextF
 
     res.status(200).json(submission);
   } catch (error) {
-    console.log({ error });
     next(error);
   }
 };
@@ -84,7 +82,6 @@ export const createSubmission = async (req: Request, res: Response, next: NextFu
 
     res.status(201).json(submission);
   } catch (error) {
-    console.log({ error });
     next(error);
   }
 };
