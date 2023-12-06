@@ -70,7 +70,6 @@ export const getSubmissionById = async (req: Request, res: Response, next: NextF
 export const createSubmission = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { form_id } = req.params;
-    const { submitted_data } = req.body;
 
     invariant(!isNaN(Number(form_id)), 'Form ID must be a valid number');
 
@@ -78,7 +77,7 @@ export const createSubmission = async (req: Request, res: Response, next: NextFu
       .insertInto('submission')
       .values({
         form_id: Number(form_id),
-        submitted_data,
+        submitted_data: req.body,
       })
       .returningAll()
       .executeTakeFirst();
