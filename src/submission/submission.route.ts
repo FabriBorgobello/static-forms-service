@@ -2,7 +2,8 @@ import { Router } from 'express';
 import * as submissionController from '@/submission/submission.controller';
 import { authenticated } from '@/auth/middlewares';
 
-const router = Router();
+const router = Router({ mergeParams: true });
+// mergeParams: true allows us to access the form_id param from the parent router
 
 // GET all submissions
 router.get('/', authenticated, submissionController.getSubmissionsByForm);

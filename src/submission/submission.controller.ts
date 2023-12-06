@@ -12,15 +12,20 @@ export const getSubmissionsByForm = async (req: Request, res: Response, next: Ne
     invariant(user, 'User must be authenticated');
     invariant(!isNaN(Number(form_id)), 'Form ID must be a valid number');
 
-    const forms = await db
+    const form = await db
       .selectFrom('form')
-      .selectAll()
+      .select('id')
       .where('user_id', '=', user.id)
       .where('id', '=', Number(form_id))
-      .execute();
+      .executeTakeFirst();
 
-    res.status(200).json(forms);
+    if (!form) throw new NotFoundError();
+
+    const submissions = await db.selectFrom('submission').selectAll().where('form_id', '=', Number(form_id)).execute();
+
+    res.status(200).json(submissions);
   } catch (error) {
+    console.log({ error });
     next(error);
   }
 };
@@ -56,6 +61,7 @@ export const getSubmissionById = async (req: Request, res: Response, next: NextF
 
     res.status(200).json(submission);
   } catch (error) {
+    console.log({ error });
     next(error);
   }
 };
@@ -79,6 +85,7 @@ export const createSubmission = async (req: Request, res: Response, next: NextFu
 
     res.status(201).json(submission);
   } catch (error) {
+    console.log({ error });
     next(error);
   }
 };
