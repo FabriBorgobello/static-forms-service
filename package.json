@@ -10,6 +10,7 @@
     "db:generate-types": "kysely-codegen",
     "db:migrate": "tsx --env-file=.env ./src/database/migrator.ts",
     "db:seed": "tsx --env-file=.env ./src/database/seeder.ts",
+    "prepare": "husky install",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx,json}'"
   },
@@ -51,6 +52,7 @@
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "kysely-codegen": "^0.11.0",
     "prettier": "^3.1.0",
     "tsx": "^4.6.0"
