@@ -21,7 +21,10 @@ export function generateAccessToken(jwtPayload: JwtPayload) {
 }
 
 export function generateRefreshToken(jwtPayload: JwtPayload) {
-  const refresh = jwt.sign({ ...jwtPayload, expiresIn: 60 * 60 * 24 * 7 }, env.REFRESH_TOKEN_SECRET);
+  const refresh = jwt.sign(
+    { ...jwtPayload, expiresIn: 60 * 60 * 24 * 7 },
+    env.REFRESH_TOKEN_SECRET
+  );
   return refresh;
 }
 

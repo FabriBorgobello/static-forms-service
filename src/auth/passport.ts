@@ -16,16 +16,23 @@ import { JwtPayload } from './auth.utils';
  */
 passport.use(
   new JWTStrategy(
-    { jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), secretOrKey: env.JWT_SECRET },
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: env.JWT_SECRET,
+    },
     async (jwt_payload: JwtPayload, done) => {
-      const user = await db.selectFrom('user').selectAll().where('id', '=', jwt_payload.id).executeTakeFirst();
+      const user = await db
+        .selectFrom('user')
+        .selectAll()
+        .where('id', '=', jwt_payload.id)
+        .executeTakeFirst();
       if (user) {
         return done(null, user);
       } else {
         return done(null, false);
       }
-    },
-  ),
+    }
+  )
 );
 
 /**
@@ -56,8 +63,8 @@ passport.use(
       // If user exists, update name and google_id
       await updateUserFromGoogle(profile);
       return done(null, user);
-    },
-  ),
+    }
+  )
 );
 
 /**
@@ -77,5 +84,5 @@ passport.use(
 
     // Return user
     return done(null, user);
-  }),
+  })
 );

@@ -21,7 +21,11 @@ export const getSubmissionsByForm = async (req: Request, res: Response, next: Ne
 
     if (!form) throw new NotFoundError();
 
-    const submissions = await db.selectFrom('submission').selectAll().where('form_id', '=', Number(form_id)).execute();
+    const submissions = await db
+      .selectFrom('submission')
+      .selectAll()
+      .where('form_id', '=', Number(form_id))
+      .execute();
 
     res.status(200).json(submissions);
   } catch (error) {
@@ -111,7 +115,8 @@ export const deleteSubmission = async (req: Request, res: Response, next: NextFu
       .where('id', '=', Number(id))
       .executeTakeFirst();
 
-    if (Number(numDeletedRows) === 0) throw new NotFoundError('Submission not found or access denied');
+    if (Number(numDeletedRows) === 0)
+      throw new NotFoundError('Submission not found or access denied');
 
     res.status(204).end();
   } catch (error) {

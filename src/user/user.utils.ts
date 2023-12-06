@@ -3,12 +3,20 @@ import { USER_PUBLIC_FIELDS } from './user.model';
 import { Profile } from 'passport';
 
 export async function getUserByEmail(email: string) {
-  const user = await db.selectFrom('user').selectAll().where('email', '=', email).executeTakeFirst();
+  const user = await db
+    .selectFrom('user')
+    .selectAll()
+    .where('email', '=', email)
+    .executeTakeFirst();
   return user;
 }
 
 export async function getUserById(id: number) {
-  const user = await db.selectFrom('user').select(USER_PUBLIC_FIELDS).where('id', '=', id).executeTakeFirst();
+  const user = await db
+    .selectFrom('user')
+    .select(USER_PUBLIC_FIELDS)
+    .where('id', '=', id)
+    .executeTakeFirst();
   return user;
 }
 

@@ -25,7 +25,11 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
-    const user = await db.selectFrom('user').selectAll().where('email', '=', email).executeTakeFirst();
+    const user = await db
+      .selectFrom('user')
+      .selectAll()
+      .where('email', '=', email)
+      .executeTakeFirst();
 
     if (!user || !user.hash || !user.salt) throw new UnauthorizedError();
     if (!isPasswordCorrect(password, user.hash, user.salt)) throw new UnauthorizedError();
@@ -34,7 +38,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const { access, refresh } = generateTokens(user);
 
     // Save refresh token to database
-    await db.updateTable('user').set({ refresh_token: refresh }).where('email', '=', user.email).execute();
+    await db
+      .updateTable('user')
+      .set({ refresh_token: refresh })
+      .where('email', '=', user.email)
+      .execute();
 
     res.status(200).json({ access, refresh });
   } catch (error) {
@@ -48,7 +56,11 @@ export const token = async (req: Request, res: Response, next: NextFunction) => 
     const { refresh } = req.body;
     // Verify refresh token and get user
     const jwtPayload = verifyRefreshToken(refresh);
-    const user = await db.selectFrom('user').selectAll().where('email', '=', jwtPayload.email).executeTakeFirst();
+    const user = await db
+      .selectFrom('user')
+      .selectAll()
+      .where('email', '=', jwtPayload.email)
+      .executeTakeFirst();
     if (!user || user.refresh_token !== refresh) throw new UnauthorizedError();
 
     // Generate JWT access token
@@ -65,12 +77,20 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
     const { refresh } = req.body;
     // Verify refresh token and get user
     const jwtPayload = verifyRefreshToken(refresh);
-    const user = await db.selectFrom('user').selectAll().where('email', '=', jwtPayload.email).executeTakeFirst();
+    const user = await db
+      .selectFrom('user')
+      .selectAll()
+      .where('email', '=', jwtPayload.email)
+      .executeTakeFirst();
 
     if (!user || user.refresh_token !== refresh) throw new UnauthorizedError();
 
     // Remove refresh token from database
-    await db.updateTable('user').set({ refresh_token: null }).where('email', '=', user.email).execute();
+    await db
+      .updateTable('user')
+      .set({ refresh_token: null })
+      .where('email', '=', user.email)
+      .execute();
 
     res.status(200).end();
   } catch (error) {
@@ -79,7 +99,9 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 /** Redirect to Google OAuth */
-export const google = passport.authenticate('google', { scope: ['profile', 'email'] });
+export const google = passport.authenticate('google', {
+  scope: ['profile', 'email'],
+});
 
 /** Google OAuth callback */
 export const googleCallback = async (req: Request, res: Response, next: NextFunction) => {
@@ -94,7 +116,10 @@ export const googleCallback = async (req: Request, res: Response, next: NextFunc
       const { access, refresh } = generateTokens(user);
 
       // Save refresh token to database
-      db.updateTable('user').set({ refresh_token: refresh }).where('email', '=', user.email).execute();
+      db.updateTable('user')
+        .set({ refresh_token: refresh })
+        .where('email', '=', user.email)
+        .execute();
 
       res.status(200).json({ access, refresh });
     })(req, res, next);

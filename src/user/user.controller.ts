@@ -16,7 +16,10 @@ export const getUsers = async (req: Request, res: Response, next: NextFunction) 
     const limit = Number(req.query.limit) >= 1 ? Number(req.query.limit) : 10;
 
     // Get total count of users for pagination metadata
-    const { count } = await db.selectFrom('user').select(db.fn.countAll().as('count')).executeTakeFirstOrThrow();
+    const { count } = await db
+      .selectFrom('user')
+      .select(db.fn.countAll().as('count'))
+      .executeTakeFirstOrThrow();
     // Retrieve users with pagination
     const users = await getUsersSafely()
       .limit(limit)
@@ -67,7 +70,10 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { numDeletedRows } = await db.deleteFrom('user').where('id', '=', Number(id)).executeTakeFirst();
+    const { numDeletedRows } = await db
+      .deleteFrom('user')
+      .where('id', '=', Number(id))
+      .executeTakeFirst();
     if (!numDeletedRows) throw new NotFoundError();
     res.status(204).send();
   } catch (error) {

@@ -9,7 +9,11 @@ export const getForms = async (req: Request, res: Response, next: NextFunction) 
   try {
     const user = req.user;
     invariant(user, 'User must be authenticated');
-    const forms = await db.selectFrom('form').select(FORM_PUBLIC_FIELDS).where('user_id', '=', user.id).execute();
+    const forms = await db
+      .selectFrom('form')
+      .select(FORM_PUBLIC_FIELDS)
+      .where('user_id', '=', user.id)
+      .execute();
     res.status(200).json(forms);
   } catch (error) {
     next(error);

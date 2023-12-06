@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import pg from 'pg';
 
 export class AppError extends Error {
@@ -46,7 +46,7 @@ function handleDatabaseError(err: pg.DatabaseError, res: Response) {
   }
 }
 
-export const errorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler = (err: Error, _req: Request, res: Response) => {
   if (err instanceof AppError) {
     res.status(err.statusCode).json({ error: err.message });
   } else if (err instanceof pg.DatabaseError) {
